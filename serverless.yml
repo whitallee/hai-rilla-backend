@@ -28,7 +28,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:GetItem"
-        Resource: !GetAtt CommentsTable
+        Resource: !GetAtt CommentsTable.Arn
   createComment:
     handler: api.createComment
     name: create-comment
@@ -42,7 +42,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:PutItem"
-        Resource: !GetAtt CommentsTable
+        Resource: !GetAtt CommentsTable.Arn
   updateComment:
     handler: api.updateComment
     name: update-comment
@@ -56,7 +56,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:UpdateItem"
-        Resource: !GetAtt CommentsTable
+        Resource: !GetAtt CommentsTable.Arn
   deleteComment:
     handler: api.deleteComment
     name: delete-comment
@@ -70,7 +70,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:DeleteItem"
-        Resource: !GetAtt CommentsTable
+        Resource: !GetAtt CommentsTable.Arn
   getAllComments:
     handler: api.getAllComments
     name: get-all-comments
@@ -84,7 +84,7 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:Scan"
-        Resource: !GetAtt CommentsTable
+        Resource: !GetAtt CommentsTable.Arn
 
 resources:
   Resources:
