@@ -2,7 +2,7 @@ service: rilla-app-crud-api
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs20.x
   stage: dev
   region: use-west-1
   environment:
