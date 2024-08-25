@@ -94,7 +94,7 @@ resources:
         TableName: ${self:custom.commentsTableName}
         AttributeDefinitions:
           - AttributeName: commentId
-          - AttributeType: S
+            AttributeType: S
         KeySchema:
           - AttributeName: commentId
             KeyType: HASH
