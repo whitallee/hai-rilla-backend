@@ -1,0 +1,103 @@
+service: rilla-app-crud-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: use-west-1
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:custom.commentsTableName}
+
+custom:
+  commentsTableName: comments-table-${self:provider.stage}
+
+plugins:
+  - serverless-iam-roles-per-function
+
+functions:
+  getComment:
+    handler: api.getComment
+    name: get-comment
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: comment/{commentId}
+          method: GET
+    iamRolesStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt CommentsTable
+  createComment:
+    handler: api.createComment
+    name: create-comment
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: comment
+          method: POST
+    iamRolesStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt CommentsTable
+  updateComment:
+    handler: api.updateComment
+    name: update-comment
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: comment/{commentId}
+          method: PUT
+    iamRolesStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt CommentsTable
+  deleteComment:
+    handler: api.deleteComment
+    name: delete-comment
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: comment/{commentId}
+          method: DELETE
+    iamRolesStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt CommentsTable
+  getAllComments:
+    handler: api.getAllComments
+    name: get-all-comments
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: comments
+          method: GET
+    iamRolesStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt CommentsTable
+
+resources:
+  Resources:
+    CommentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.commentsTableName}
+        AttributeDefinitions:
+          - AttributeName: commentId
+          - AttributeType: S
+        KeySchema:
+          - AttributeName: commentId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

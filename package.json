@@ -1,0 +1,23 @@
+{
+  "name": "api-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.637.0",
+    "@aws-sdk/util-dynamodb": "^3.637.0",
+    "express": "^4.19.2",
+    "serverless-iam-roles-per-function": "^3.0.0-d84bffd"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
